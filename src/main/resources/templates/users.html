@@ -24,7 +24,7 @@
         <td th:text = "${user.roles}">roles</td>
         <td>
             <a th:href="@{edit/{id}(id=${user.id})}">Edit</a>
-            <a th:href="@{~/user/{id}(id=${user.id})}">View</a>
+            <a th:href="@{view/{id}(id=${user.id})}">View</a>
             <a th:href="@{delete/{id}(id=${user.id})}">Delete</a>
         </td>
     </tr>

@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +12,11 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -28,7 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> allUsers() {
-        return (List<User>) userRepository.findAll();
+        return IteratorUtils.toList(userRepository.findAll().iterator());
     }
 
     @Override
@@ -44,7 +47,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void edit(User user) {
-        user.setPassword((new BCryptPasswordEncoder()).encode(user.getPassword()));
+        if (!(user.getPassword().equals(getUser(user.getId()).getPassword()))) {
+            user.setPassword((new BCryptPasswordEncoder()).encode(user.getPassword()));
+        }
         userRepository.save(user);
     }
 
@@ -60,17 +65,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<Role> getRoles() {
-        return (List<Role>) roleRepository.findAll();
+        return IteratorUtils.toList(roleRepository.findAll().iterator());
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);
 
+        user.getAuthorities().size();
+
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-
         return user;
     }
 }

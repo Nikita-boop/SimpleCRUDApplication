@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -13,12 +12,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    @Column(name = "email", unique = true)
     private String email;
     private int age;
     private String gender;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -26,6 +26,15 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+
+    public User(String name, String email, int age, String gender, String password, Set<Role> roles) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public User(String name, String email, int age, String gender, String password) {
         this.name = name;
@@ -101,16 +110,12 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;
+        return roles;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return getEmail();
     }
 
     @Override

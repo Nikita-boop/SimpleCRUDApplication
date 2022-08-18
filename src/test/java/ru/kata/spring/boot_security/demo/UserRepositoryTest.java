@@ -28,7 +28,7 @@ public class UserRepositoryTest {
     @Test
     public void testCreateUser() {
         User user = new User();
-        user.setEmail("ravikumayt@gmail.com");
+        user.setEmail("ravikum566@gmail.com");
         user.setPassword("ravi2020");
         user.setName("Ravi");
 
@@ -45,7 +45,7 @@ public class UserRepositoryTest {
         Role roleAdmin = roleRepo.findByName("ADMIN");
 
         User user = new User();
-        user.setEmail("mikecl.gates@gmail.com");
+        user.setEmail("mik5@gmail.com");
         user.setPassword("mike2020");
         user.setName("Mike");
         user.addRole(roleAdmin);
@@ -57,7 +57,7 @@ public class UserRepositoryTest {
 
     @Test
     public void testAddRoleToExistingUser() {
-        User user = userRepo.findById(2).orElse(null);
+        User user = userRepo.findById(17).orElse(null);
         Role roleUser = roleRepo.findByName("ADMIN");
 
         user.addRole(roleUser);
