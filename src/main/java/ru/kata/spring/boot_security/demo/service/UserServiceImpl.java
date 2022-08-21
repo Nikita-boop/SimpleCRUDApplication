@@ -16,7 +16,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -35,17 +34,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public void add(User user) {
         user.setPassword((new BCryptPasswordEncoder()).encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public void delete(Integer id) {
         userRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public void edit(User user) {
         if (!(user.getPassword().equals(getUser(user.getId()).getPassword()))) {
             user.setPassword((new BCryptPasswordEncoder()).encode(user.getPassword()));
@@ -69,6 +71,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);
 
