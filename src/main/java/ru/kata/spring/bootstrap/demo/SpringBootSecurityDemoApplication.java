@@ -1,8 +1,7 @@
-package ru.kata.spring.boot_security.demo;
+package ru.kata.spring.bootstrap.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 public class SpringBootSecurityDemoApplication {

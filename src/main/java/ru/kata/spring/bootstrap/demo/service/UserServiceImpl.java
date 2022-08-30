@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.service;
+package ru.kata.spring.bootstrap.demo.service;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
-import ru.kata.spring.boot_security.demo.repository.UserRepository;
+import ru.kata.spring.bootstrap.demo.model.Role;
+import ru.kata.spring.bootstrap.demo.model.User;
+import ru.kata.spring.bootstrap.demo.repository.RoleRepository;
+import ru.kata.spring.bootstrap.demo.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

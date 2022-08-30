@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo;
+package ru.kata.spring.bootstrap.demo;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

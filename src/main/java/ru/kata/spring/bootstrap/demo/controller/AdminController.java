@@ -1,15 +1,13 @@
-package ru.kata.spring.boot_security.demo.controller;
+package ru.kata.spring.bootstrap.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.bootstrap.demo.model.Role;
+import ru.kata.spring.bootstrap.demo.model.User;
+import ru.kata.spring.bootstrap.demo.service.UserService;
 
 import java.util.List;
 
@@ -24,9 +22,9 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String allUsers(Model model) {
-        List<User> users = userService.allUsers();
-        model.addAttribute("users", users);
+    public String showUsers(Model model){
+        model.addAttribute("users", userService.allUsers());
+        model.addAttribute("user", (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "users";
     }
 

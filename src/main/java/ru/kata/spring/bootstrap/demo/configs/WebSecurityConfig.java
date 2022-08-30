@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.configs;
+package ru.kata.spring.bootstrap.demo.configs;
 
 
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.bootstrap.demo.service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -32,13 +32,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
+                .cors().disable()
                 .authorizeRequests()
                     .antMatchers("/", "/login", "/index").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
                 .and()
-                    .formLogin().successHandler(successUserHandler)
+                    .formLogin()
+                    .loginPage("/login")
+                    .successHandler(successUserHandler)
                 .and()
                     .logout().permitAll();
     }
